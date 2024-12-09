@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign up</title>
+</head>
+<body>
+  <h1>Sign up</h1>
+  <form class="sign-up-form" action="/sign-up" method="POST">
+    <label for="fullName">Full name: </label>
+    <input type="text" name="fullName" id="fullName" required>
+    <label for="email">Email: </label>
+    <input type="text" name="email" id="email" required>
+    <label for="password">Password: </label>
+    <input type="text" name="password" id="password" required>
+    <button type="submit">Submit</button>
+  </form>
+  <div class="ref-link">
+    <a href="/log-in">Already a member? Log-in now</a>
+  </div>
+</body>
+</html>

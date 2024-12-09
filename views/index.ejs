@@ -4,9 +4,38 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Index</title>
+  <style></style>
+  <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-  <h1>Hello world again</h1>
+  <% if (locals.user) { %>
+    <h1>FileNav <%= user.name %></h1>
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+      <label for="file">Upload your file:</label>
+      <input type="file" id="file" name="file" multiple>
+      <button type="submit">Upload</button>
+    </form>
+    <% if (files) { %>
+      <div class="file-nav-container">
+        <% files.forEach(file => { %>
+          <div class="file-row">
+            <a href="/<%= file.name %>" class="file-link">
+              <% if (file.isDirectory) { %>
+                Directory: <%=  file.name %>
+              <% } else { %>
+                File: <%= file.name %>
+              <% } %>
+            </a>
+          </div>
+        <% }) %>
+        </div>
+      <% } else { %>
+        <div>
+          <p> Folder empty</p>
+        </div>
+      <% } %>
+  <% } else { %>
+    <a href="/log-in"> Log in now</a>
+  <% } %>
 </body>
 </html>
