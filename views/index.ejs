@@ -19,11 +19,10 @@
       <div class="file-nav-container">
         <% files.forEach(file => { %>
           <div class="file-row">
-            <a href="/<%= file.name %>" class="file-link">
-              <% if (file.isDirectory) { %>
-                Directory: <%=  file.name %>
+            <% if (file.isDirectory) { %>
+              <a href="/<%= file.name %>" class="file-link"> 📁 <%=  file.name %></a>
               <% } else { %>
-                File: <%= file.name %>
+                <p>📄 <%= file.name %></p>
               <% } %>
             </a>
           </div>

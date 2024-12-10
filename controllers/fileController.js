@@ -15,18 +15,13 @@ async function makeFolder() {
 
 async function readFolder(folder) {
   try {
-    const folderPath = path.join(__dirname, '../');
-    const items = await fs.readdir(folderPath);
+    const folderPath = path.resolve(__dirname, '../', folder || '');
+    const items = await fs.readdir(folderPath, { withFileTypes: true });
 
-    const sortedItems = await Promise.all(items.map(async (item) => {
-      const stat = await fs.stat(item)
-
-      return {
-        name: item,
-        isDirectory: stat.isDirectory(),
-      }
+    return items.map(item => ({
+        name: item.name,
+        isDirectory: item.isDirectory(),
     }));
-    return sortedItems
   } catch (err) {
     console.error(err);
     throw err;

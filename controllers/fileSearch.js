@@ -1,11 +1,9 @@
 const fs = require('fs').promises
 const path = require('path')
 
-async function fileSearch(startPath, targetName) {
-  const results = [];
-  console.log(startPath)
-  console.log(targetName)
-
+async function getFilePath(startPath, targetName) {
+  console.log('Start path :', startPath)
+  console.log('targetName: ', targetName)
   async function searchDirectory(directory) {
     try {
       const entries = await fs.readdir(directory, { withFileTypes: true });
@@ -14,7 +12,7 @@ async function fileSearch(startPath, targetName) {
         const fullPath = path.join(directory, entry.name);
 
         if (entry.name === targetName) {
-          results.push(fullPath);
+          return fullPath;
         }
 
         if (entry.isDirectory()) {
@@ -26,8 +24,11 @@ async function fileSearch(startPath, targetName) {
     }
   }
 
-  await searchDirectory(startPath);
-  return results;
+  const result = await searchDirectory(startPath);
+  const string = result.replace(/^.*\/fileuploader/, "/fileuploader"); // fileuploader is the base file
+  console.log(result)
+  console.log(string)
+  return string;
 }
 
-module.exports = fileSearch;
+module.exports = getFilePath;

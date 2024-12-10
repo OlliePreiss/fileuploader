@@ -5,24 +5,17 @@ const path = require('path')
 
 async function homepageGet(req, res, next) {
   try {
-    (async () => {
-      const matches = await fileSearch('/Users/oliverpreiss/code/odin/fileuploader/', req.params.folder);
-      console.log(matches)
-      if (matches.length > 0) {
-        console.log('Matches found:');
-        matches.forEach(match => console.log(match));
-      } else {
-        console.log('No matches found');
-      }
-    })();
-
-
-    const files = await fileController.readFolder(req.params.folder)
+    const folder = req.params.folder || '';
+    console.log('Target folder: ', folder)
+    const rootFile = __dirname.replace(/\/fileuploader\/.*/, "/fileuploader/"); // fileuploader is the base file
+    const filePath = await fileSearch(rootFile, folder)
+    const folderContents = await fileController.readFolder(filePath)
+    folderContents.forEach((folder) => console.log(folder.name))
 
     res.render("index", {
       user: req.user,
-      files: files
-    })
+      files: folderContents
+      })
   } catch (err) {
     console.error('Error reading folder', err);
     next(err);
